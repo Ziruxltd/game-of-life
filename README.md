@@ -12,6 +12,10 @@ Created with https://www.farmfe.org/
 
 - [Antonio Jaramillo Fanta](https://www.github.com/Ziruxltd)
 
+## Demo
+
+https://ziruxltd.github.io/game-of-life/
+
 
 ## Run Locally
 

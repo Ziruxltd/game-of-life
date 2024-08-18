@@ -90,6 +90,9 @@ canvas.addEventListener('mousedown', (event) => {
 canvas.addEventListener('mouseup', () => {
   painting = false;
 });
+canvas.addEventListener('mouseleave', () => {
+  painting = false;
+});
 canvas.addEventListener('mousemove', handleDrawInCanvas);
 
 erase_button.addEventListener('click', () => {
