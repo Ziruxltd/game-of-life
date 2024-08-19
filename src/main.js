@@ -21,6 +21,7 @@ let generation = 0;
 let painting = false;
 let erase = false;
 let paintSize = 1;
+let population = 0;
 
 canvas.width = BOARD_WIDTH * BLOCK_SIZE;
 canvas.height = BOARD_HEIGHT * BLOCK_SIZE;
@@ -47,11 +48,23 @@ function update() {
   board = nextGeneration(board);
   draw();
   updateGeneration();
+  updateAliveCount();
 }
 
 function updateGeneration() {
   generation++;
   document.getElementById('generation').innerText = generation;
+}
+
+function updateAliveCount() {
+  let aliveCount = 0;
+  board.forEach((row) => {
+    row.forEach((value) => {
+      if (value === 1) aliveCount++;
+    });
+  });
+  population = aliveCount;
+  document.getElementById('alive-count').innerText = population;
 }
 
 function draw() {
@@ -95,6 +108,35 @@ canvas.addEventListener('mouseleave', () => {
 });
 canvas.addEventListener('mousemove', handleDrawInCanvas);
 
+// Touchescreen
+canvas.addEventListener('touchstart', (event) => {
+  event.preventDefault();
+  if (!gameStarted) painting = true;
+  const touches = {
+    offsetX: event.touches[0].clientX - canvas.getBoundingClientRect().left,
+    offsetY: event.touches[0].clientY - canvas.getBoundingClientRect().top,
+  };
+  
+  handleDrawInCanvas(touches);
+});
+canvas.addEventListener('touchend', (event) => {
+  event.preventDefault();
+  painting = false;
+});
+canvas.addEventListener('touchcancel', (event) => {
+  event.preventDefault();
+  painting = false;
+});
+canvas.addEventListener('touchmove', (event) => {
+  event.preventDefault();
+  const touches = {
+    offsetX: event.touches[0].clientX - canvas.getBoundingClientRect().left,
+    offsetY: event.touches[0].clientY - canvas.getBoundingClientRect().top,
+  };
+  
+  handleDrawInCanvas(touches);
+});
+
 erase_button.addEventListener('click', () => {
   erase = true;
   erase_button.setAttribute('activated', 'true');
@@ -127,6 +169,7 @@ restart_button.addEventListener('click', () => {
 
 function handleDrawInCanvas(event) {
   if (!painting) return;
+
   const x = Math.floor(event.offsetX / BLOCK_SIZE);
   const y = Math.floor(event.offsetY / BLOCK_SIZE);
 
@@ -140,6 +183,7 @@ function handleDrawInCanvas(event) {
   }
 
   draw();
+  updateAliveCount();
 }
 
 // 3. Game logic
