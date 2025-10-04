@@ -4,7 +4,7 @@ export default defineConfig({
   compilation: {
     presetEnv: false,
     output: {
-      publicPath: '/game-of-life/',
+      publicPath: '/',
     },
   }
 });
