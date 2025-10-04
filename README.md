@@ -14,7 +14,7 @@ Created with https://www.farmfe.org/
 
 ## Demo
 
-https://ziruxltd.github.io/game-of-life/
+https://gameoflife.antoniojaramillo.dev/
 
 
 ## Run Locally
